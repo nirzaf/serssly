@@ -1,0 +1,15 @@
+﻿@model serssly.Models.Feed
+@using System.Net.Http
+
+@{ 
+    var status = "INACTIVE";
+    try
+    {
+        using var req = new HttpClient();
+        var resp = await req.GetAsync(Model.Link);
+        status = resp.StatusCode == System.Net.HttpStatusCode.OK ? "ACTIVE" : "INVACTIVE";
+    } catch { }
+}
+
+<h2 class="feed" title="@Model.Link">@Model.Title <small>(@status)</small></h2>
+
